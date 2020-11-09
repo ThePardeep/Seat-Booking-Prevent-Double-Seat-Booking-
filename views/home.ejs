@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Book App</title>
+    <style>
+        ul {
+            display: block;
+            text-align: center;
+        }
+
+        .not-booked {
+            align-items: center;
+            background-color: gray;
+            padding: 4.5rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .booked {
+            align-items: center;
+            background-color: greenyellow;
+            padding: 4.5rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<ul>
+    <h1>Concurrent Seats Booking App</h1>
+    <% seats.forEach(function(seat){ %>
+
+    <% if(seat.is_booked){ %>
+    <li class="booked" id=<%= seat.seat_id %> onclick="bookSheet(this)"><%= seat.seat_id %></li>
+    <% } else{ %>
+    <li class="not-booked" id=<%= seat.seat_id %> onclick="bookSheet(this)" id="book_seat"><%= seat.seat_id %></li>
+    <% } %>
+
+    <!-- NEW LINE -->
+    <%if (seat.seat_id%3  == 0) { %>
+    <br>
+    <% } %>
+    <% }); %>
+</ul>
+
+<script>
+
+
+
+    function bookSheet(li) {
+        const id = li.id;
+        fetch("/book/" + id, { method: "GET" }).then(res => res.json()).then(res => {
+            alert(res.msg)
+            window.location = "/";
+        })
+    }
+
+
+</script>
+
+</html>
